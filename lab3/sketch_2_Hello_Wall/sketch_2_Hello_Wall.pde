@@ -174,7 +174,6 @@ class SimulationThread implements Runnable{
     
       angles.set(widgetOne.get_device_angles()); 
       posEE.set(widgetOne.get_device_position(angles.array()));
-      print(posEE);
       //posEE.set(device_to_graphics(posEE)); 
       
       
