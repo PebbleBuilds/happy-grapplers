@@ -65,6 +65,8 @@ PVector           xSpring                             = new PVector(0, 0);
 PVector           deltaXSpring                        = new PVector(0, 0);
 float             time                                = 0;
 
+int               word                                = 2; // 0 == spring. 1 == breathing. 2 == ???
+
 
 /* generic data for a 2DOF device */
 /* joint space */
@@ -169,8 +171,17 @@ class SimulationThread implements Runnable{
     renderingForce = true;
     
     if(haplyBoard.data_available()){
-      time = time + 0.005; //s
-      xSpring.set(sin(time)*0.05,cos(time)*0.05);
+      
+      if(word == 1){
+        time = time + 0.005; //s
+        xSpring.set(sin(time)*0.05,cos(time)*0.05);
+      }
+      
+      if(word == 2){
+        time = time + 0.005; //s
+        kSpring = 40*sin(time);
+      }
+
       
       /* GET END-EFFECTOR STATE (TASK SPACE) */
       widgetOne.device_read_data();
