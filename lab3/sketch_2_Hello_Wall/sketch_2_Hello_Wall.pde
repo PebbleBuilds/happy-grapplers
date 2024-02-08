@@ -59,10 +59,10 @@ float             L                                   = 0.09;
 float             rEE                                 = 0.006;
 
 /* virtual wall parameter  */
-float             kWall                               = 450;
-PVector           fWall                               = new PVector(0, 0);
-PVector           penWall                             = new PVector(0, 0);
-PVector           posWall                             = new PVector(0.01, 0.10);
+float             kSpring                             = 20;
+PVector           fSpring                             = new PVector(0, 0);
+PVector           xSpring                             = new PVector(0, 0);
+PVector           deltaXSpring                        = new PVector(0, 0);
 
 
 
@@ -115,10 +115,10 @@ void setup(){
   widgetOne.set_mechanism(pantograph);
   
   widgetOne.add_actuator(1, CCW, 2);
-  widgetOne.add_actuator(2, CW, 1);
+  widgetOne.add_actuator(2, CCW, 1);
  
-  widgetOne.add_encoder(1, CCW, 241, 10752, 2);
-  widgetOne.add_encoder(2, CW, -61, 10752, 1);
+  widgetOne.add_encoder(1, CCW, 168, 4880, 2);
+  widgetOne.add_encoder(2, CCW, 12, 4880, 1);
   
   widgetOne.device_set_parameters();
     
@@ -131,8 +131,8 @@ void setup(){
   create_pantagraph();
   
   /* create wall graphics */
-  wall = create_wall(posWall.x-0.2, posWall.y+rEE, posWall.x+0.2, posWall.y+rEE);
-  wall.setStroke(color(0));
+  //wall = create_wall(posWall.x-0.2, posWall.y+rEE, posWall.x+0.2, posWall.y+rEE);
+  //wall.setStroke(color(0));
   
   
   
@@ -153,7 +153,7 @@ void draw(){
   /* put graphical code here, runs repeatedly at defined framerate in setup, else default at 60fps: */
   if(renderingForce == false){
     background(255); 
-    update_animation(angles.x*radsPerDegree, angles.y*radsPerDegree, posEE.x, posEE.y);
+    //update_animation(angles.x*radsPerDegree, angles.y*radsPerDegree, posEE.x, posEE.y);
   }
 }
 /* end draw section ****************************************************************************************************/
@@ -174,20 +174,24 @@ class SimulationThread implements Runnable{
     
       angles.set(widgetOne.get_device_angles()); 
       posEE.set(widgetOne.get_device_position(angles.array()));
-      posEE.set(device_to_graphics(posEE)); 
+      print(posEE);
+      //posEE.set(device_to_graphics(posEE)); 
       
       
       /* haptic wall force calculation */
-      fWall.set(0, 0);
+      fSpring.set(0, 0);
       
-      penWall.set(0, (posWall.y - (posEE.y + rEE)));
+      //penWall.set(0, (posWall.y - (posEE.y + rEE)));
       
-      if(penWall.y < 0){
-        fWall = fWall.add(penWall.mult(-kWall));  
-      }
+      //if(penWall.y < 0){
+      //  fWall = fWall.add(penWall.mult(-kWall));  
+      //}
       
-      fEE = (fWall.copy()).mult(-1);
-      fEE.set(graphics_to_device(fEE));
+      deltaXSpring = posEE.sub(xSpring);
+      fSpring = fSpring.add(deltaXSpring.mult(-kSpring));
+      
+      fEE = (fSpring.copy());
+      //fEE.set(graphics_to_device(fEE));
       /* end haptic wall force calculation */
     }
     
