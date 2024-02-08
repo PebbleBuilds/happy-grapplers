@@ -59,11 +59,11 @@ float             L                                   = 0.09;
 float             rEE                                 = 0.006;
 
 /* virtual wall parameter  */
-float             kSpring                             = 20;
+float             kSpring                             = 40;
 PVector           fSpring                             = new PVector(0, 0);
 PVector           xSpring                             = new PVector(0, 0);
 PVector           deltaXSpring                        = new PVector(0, 0);
-
+float             time                                = 0;
 
 
 /* generic data for a 2DOF device */
@@ -169,6 +169,9 @@ class SimulationThread implements Runnable{
     renderingForce = true;
     
     if(haplyBoard.data_available()){
+      time = time + 0.005; //s
+      xSpring.set(sin(time)*0.05,cos(time)*0.05);
+      
       /* GET END-EFFECTOR STATE (TASK SPACE) */
       widgetOne.device_read_data();
     
