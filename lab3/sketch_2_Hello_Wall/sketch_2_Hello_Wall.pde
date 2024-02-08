@@ -65,7 +65,7 @@ PVector           xSpring                             = new PVector(0, 0);
 PVector           deltaXSpring                        = new PVector(0, 0);
 float             time                                = 0;
 
-int               word                                = 2; // 0 == spring. 1 == breathing. 2 == ???
+int               word                                = 3; // 0 == spring. 1 == breathing. 2 == heartbeat. 3 == clock
 
 
 /* generic data for a 2DOF device */
@@ -180,6 +180,23 @@ class SimulationThread implements Runnable{
       if(word == 2){
         time = time + 0.005; //s
         kSpring = 40*sin(time);
+      }
+     
+      if(word == 3){
+        time = time + 0.001; //s
+        kSpring = kSpring - 200.0/1000.0;
+        //print(int(kSpring));
+        //print("\n");
+        if(time % 2 > 1 && time % 2 < 1.0011){
+          xSpring.set(0.05,0);
+          kSpring = 200;
+          //print("left");
+        }
+        else if(time % 2 > 0 && time % 2 < 0.0011){
+          xSpring.set(-0.05,0);
+          kSpring = 200;
+          //print("right");
+        }
       }
 
       
