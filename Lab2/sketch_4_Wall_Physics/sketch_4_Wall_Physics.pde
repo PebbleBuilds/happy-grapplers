@@ -109,7 +109,7 @@ void setup(){
    *      linux:        haplyBoard = new Board(this, "/dev/ttyUSB0", 0);
    *      mac:          haplyBoard = new Board(this, "/dev/cu.usbmodem1411", 0);
    */ 
-  haplyBoard          = new Board(this, "COM7", 0);
+  haplyBoard          = new Board(this, "COM3", 0);
   widgetOne           = new Device(widgetOneID, haplyBoard);
   pantograph          = new Pantograph();
   
@@ -159,22 +159,22 @@ void setup(){
   wall4.setFill(0, 0, 0);
   world.add(wall4);  
   
-  /* creation of door1 */
-  door1                   = new FBox(0.5, 6);
-  door1.setPosition(edgeTopLeftX+worldWidth/2.0 + 7, edgeTopLeftY+2*worldHeight/3.0 - 0.5);
-  door1.setStatic(false);
-  door1.setFill(0, 0, 0);
-  world.add(door1); 
+  ///* creation of door1 */
+  //door1                   = new FBox(0.5, 6);
+  //door1.setPosition(edgeTopLeftX+worldWidth/2.0 + 7, edgeTopLeftY+2*worldHeight/3.0 - 0.5);
+  //door1.setStatic(false);
+  //door1.setFill(0, 0, 0);
+  //world.add(door1); 
   
-  /* creation of door2 */
-  door2                   = new FBox(0.5, 6);
-  door2.setPosition(edgeTopLeftX+worldWidth/2.0 + 5, edgeTopLeftY+2*worldHeight/3.0 - 1.5);
-  door2.setStatic(false);
-  door2.setFill(0, 0, 0);
-  world.add(door2); 
+  ///* creation of door2 */
+  //door2                   = new FBox(0.5, 6);
+  //door2.setPosition(edgeTopLeftX+worldWidth/2.0 + 5, edgeTopLeftY+2*worldHeight/3.0 - 1.5);
+  //door2.setStatic(false);
+  //door2.setFill(0, 0, 0);
+  //world.add(door2); 
   
-  joint1 = new FRevoluteJoint(door1,door2);
-  world.add(joint1);
+  //joint1 = new FRevoluteJoint(door1,door2);
+  //world.add(joint1);
   
     
   /* creation of ball */
